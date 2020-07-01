@@ -16,3 +16,12 @@
 # Build:
 1. edit main.py, the logic is self explanatory
 2. build using `pyinstaller --onefile main.py`
+
+
+# Features
+### Giving yourself 99,999,999 mones
+### Changing player level
+### Changing skill levels
+### Maxing hideout areas
+### Maxing trader levels
+### Setting all current quests to Available for Finish
