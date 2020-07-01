@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+import sys
 
 money_list = ['5449016a4bdc2d6f028b456f',
               "569668774bdc2da2298b4568",
@@ -107,8 +108,8 @@ def profile_select(working_directory):
     for profile in all_profiles:
         char_json_path = working_directory + "\\Server\\user\\profiles\\" + profile + "\\character.json"
 
-        with open(char_json_path, "r", encoding='utf-8') as charjsonfile:
-            prof_json = json.load(charjsonfile)
+        with open(char_json_path, "r", encoding='utf-8') as charjsonfile_r:
+            prof_json = json.load(charjsonfile_r)
 
             nickname = "asd"
             nickname = prof_json["Info"]["Nickname"]
@@ -136,7 +137,7 @@ def select_level_get_experience():
 def max_traderstandings(charjsondata):
     for trader in charjsondata["TraderStandings"]:
         # print(trader)
-        trader_dict = data["TraderStandings"][trader]
+        trader_dict = charjsondata["TraderStandings"][trader]
 
         # unlock jaeger
         if trader_dict["display"] == "false" and trader == "5c0647fdd443bc2504c2d371":
@@ -187,6 +188,9 @@ def max_hideoutareas(charjsondata):
 
 
 
+
+
+
 def main():
     working_directory = os.getcwd()
     print("WORKING DIRECTORY: ", working_directory)
@@ -200,8 +204,8 @@ def main():
     profile_id = profile_select(working_directory)
 
     char_json_path = working_directory + "\\Server\\user\\profiles\\" + profile_id + "\\character.json"
-    with open(char_json_path, "r", encoding='utf-8') as charjsonfile:
-        charjsondata = json.load(charjsonfile)
+    with open(char_json_path, "r", encoding='utf-8') as charjsonfile_r:
+        charjsondata = json.load(charjsonfile_r)
 
     # MAKE A COPY OF character.json for the given profile
     i = 0
@@ -264,6 +268,30 @@ def main():
         max_hideoutareas(charjsondata)
 
     print("\n=======================================\n")
+
+
+
+    # change quest status
+    quests_list = charjsondata["Quests"]
+    print(len(quests_list), " quests found")
+
+    selected = options_list("change status of quests to AvailableForFinish?", ["no", "yes"])
+    if selected == "yes":
+        for quest in charjsondata["Quests"]:
+            if "status" in quest:
+                quest["status"] = "AvailableForFinish"
+
+    print("\n=======================================\n")
+
+
+
+
+    with open(char_json_path, "w", encoding='utf-8') as charjsonfile_w:
+        json.dump(charjsondata, charjsonfile_w, indent=4)
+
+    print("new json data saved to ", char_json_path)
+
+
 
 
 
