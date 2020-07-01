@@ -149,13 +149,11 @@ def max_traderstandings(charjsondata):
         trader_dict = charjsondata["TraderStandings"][trader]
 
         # unlock jaeger
-        if trader_dict["display"] == "false" and trader == "5c0647fdd443bc2504c2d371":
-            trader_dict["display"] == "true"
+        if trader_dict["display"] == False and trader == "5c0647fdd443bc2504c2d371":
+            trader_dict["display"] = True
 
         # set levels to max
         if len(trader_dict["loyaltyLevels"]) > 1:
-
-
             dict_len = len(trader_dict["loyaltyLevels"])
 
             dict_len_str = str(dict_len - 1)
@@ -230,6 +228,7 @@ def main():
 
     print("\n=======================================\n")
 
+
     # give 99,999,999 MONEY
     selected = options_list("set all money in inventory to 99,999,999?", ["no", "yes"])
 
@@ -255,6 +254,29 @@ def main():
         print("Experience changed to: ", new_experience)
 
     print("\n=======================================\n")
+
+
+
+    # change skill levels
+    selected = options_list("change skill levels?", ["no", "yes"])
+    if selected == "yes":
+
+        new_skill_level = -1
+        while new_skill_level<1 or new_skill_level>51:
+            new_skill_level = int(input("enter desired new level, 1 to 51 inclusive: "))
+
+
+        for skill in charjsondata["Skills"]["Common"]:
+            if skill["Id"] != "BotReload":
+                skill["Progress"] = new_skill_level*100
+                print(skill["Id"], " progress changed to ", new_skill_level*100)
+
+    print("\n=======================================\n")
+
+
+
+
+    # change skill levels
 
     # change traderstandings
     selected = options_list("Max Trader Levels?", ["no", "yes"])
