@@ -10,5 +10,5 @@
 
 
 # Build:
-edit main.py, the logic is self explanatory
-build using `pyinstaller --onefile main.py`
+1. edit main.py, the logic is self explanatory
+2. build using `pyinstaller --onefile main.py`
