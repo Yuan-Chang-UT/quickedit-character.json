@@ -3,4 +3,7 @@ Server/
 *.lnk
 *.pyc
 .idea/
+build
 build/
+/build
+build/main/

@@ -82,6 +82,15 @@ known_levels_map = {1: 0,
                     69: 13198961,
                     70: 23198961}
 
+known_traders_map = {"54cb50c76803fa8b248b4571": "Prapor",
+                     "5ac3b934156ae10c4430e83c": "Ragman",
+                     "58330581ace78e27b8b10cee": "Skier",
+                     "5935c25fb3acc3127c3d8cd9": "Peacekeeper",
+                     "54cb57776803fa99248b456e": "Therapist",
+                     "5c0647fdd443bc2504c2d371": "Jaeger",
+                     "579dc571d53a0658a154fbec": "Fence",
+                     "5a7c2eca46aef81a7ca2145d": "Mechanic"}
+
 
 def options_list(prompt, lst):
     print(prompt)
@@ -145,7 +154,7 @@ def max_traderstandings(charjsondata):
 
         # set levels to max
         if len(trader_dict["loyaltyLevels"]) > 1:
-            print(trader)
+
 
             dict_len = len(trader_dict["loyaltyLevels"])
 
@@ -156,6 +165,8 @@ def max_traderstandings(charjsondata):
             trader_dict["currentSalesSum"] = top_level["minSalesSum"]
             trader_dict["currentStanding"] = top_level["minStanding"]
             trader_dict["currentLevel"] = dict_len
+
+            print(known_traders_map[trader], " set to level ", trader_dict["currentLevel"])
 
 
 def max_hideoutareas(charjsondata):
@@ -190,13 +201,13 @@ def max_hideoutareas(charjsondata):
 
 
 
-
 def main():
     working_directory = os.getcwd()
     print("WORKING DIRECTORY: ", working_directory)
 
     if not os.path.isdir("Server\\user\\profiles"):
         print("Server\\users\\profiles folder not found")
+        x = input("Press anything to exit")
         sys.exit()
 
     # print(os.listdir("Server\\user\\profiles"))
@@ -217,11 +228,7 @@ def main():
 
     print("\ncharacter.json backed up as ", "character_backup_raw%s.json" % i)
 
-
-
     print("\n=======================================\n")
-
-
 
     # give 99,999,999 MONEY
     selected = options_list("set all money in inventory to 99,999,999?", ["no", "yes"])
@@ -237,10 +244,7 @@ def main():
 
                 maxed.append(item['_tpl'])
 
-
-
     print("\n=======================================\n")
-
 
     # change level
     selected = options_list("change player level?", ["no", "yes"])
@@ -250,9 +254,7 @@ def main():
         charjsondata["Info"]["Experience"] = new_experience
         print("Experience changed to: ", new_experience)
 
-
     print("\n=======================================\n")
-
 
     # change traderstandings
     selected = options_list("Max Trader Levels?", ["no", "yes"])
@@ -261,15 +263,12 @@ def main():
 
     print("\n=======================================\n")
 
-
     # change hideout areas
     selected = options_list("Max Hideout Areas?", ["no", "yes"])
     if selected == "yes":
         max_hideoutareas(charjsondata)
 
     print("\n=======================================\n")
-
-
 
     # change quest status
     quests_list = charjsondata["Quests"]
@@ -283,17 +282,12 @@ def main():
 
     print("\n=======================================\n")
 
-
-
-
     with open(char_json_path, "w", encoding='utf-8') as charjsonfile_w:
         json.dump(charjsondata, charjsonfile_w, indent=4)
 
     print("new json data saved to ", char_json_path)
 
-
-
-
+    x = input("Press anything to exit")
 
 
 if __name__ == "__main__":
