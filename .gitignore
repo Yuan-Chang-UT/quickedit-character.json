@@ -2,3 +2,4 @@ Client/
 Server/
 *.lnk
 *.pyc
+.idea/
